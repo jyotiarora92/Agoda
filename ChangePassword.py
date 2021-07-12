@@ -11,6 +11,7 @@ def verifyPassword(password):
     oneLowerCase = False
     countSpecialChar = 0
     countDigit = 0
+    otherSpecialChar = False
     charDict = {}
     for i in password:
         if i in charDict:
@@ -23,17 +24,21 @@ def verifyPassword(password):
     for i in charDict.keys():
         if i in specialChars:
             countSpecialChar+=charDict[i]
-    for i in charDict.keys():
-        if 64<ord(i)<91:
-            oneUpperCase = True
-            break
-    for i in charDict.keys():
-        if 96<ord(i)<123:
-            oneLowerCase = True
-            break
-    for i in charDict.keys():
+            continue
         if 47<ord(i)<58:
             countDigit+=charDict[i]
+            continue
+        if 64<ord(i)<91:
+            oneUpperCase = True
+            continue
+        if 96<ord(i)<123:
+            oneLowerCase = True
+            continue
+        else:
+            otherSpecialChar = True
+            break
+    if otherSpecialChar:
+        return False
     if not oneLowerCase or not oneUpperCase or not countSpecialChar or not countDigit:
         return False
     if countSpecialChar > 4 or countDigit >= len(password)/2:
@@ -59,7 +64,7 @@ def checkSimilarity(oldPassword, newPassword):
     for i in charDictOld.keys():
         if i in charDictNew:
             similarCount += charDictOld[i] if charDictOld[i]<charDictNew[i] else charDictNew[i]
-    if math.ceil(len(oldPassword)*4/5)<= similarCount:
+    if math.floor(len(oldPassword)*4/5)<= similarCount:
         return False
     return True
 
@@ -84,4 +89,4 @@ def changePassword(oldPassword, newPassword):
     return True
 
 
-print(changePassword("abcdefABCDEF@!#$123456","qwerrtyABCDEF@!#$1"))
+print(changePassword("abcdefABCDEF!@#$123456","qwerrtyABCDEF@!#$1"))
