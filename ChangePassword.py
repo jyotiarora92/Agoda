@@ -72,19 +72,19 @@ def checkSimilarity(oldPassword, newPassword):
 def changePassword(oldPassword, newPassword):
     flag = matchPasswordWithSystem(oldPassword)
     if not flag:
-        print("oldPassword does not match with system")
+       # print("oldPassword does not match with system")
         return False
     flag = verifyPassword(newPassword)
     if not flag:
-        print("newPassword is not a valid password")
+       # print("newPassword is not a valid password")
         return False
     flag = checkSimilarity(oldPassword, newPassword)
     if not flag:
-        print("newPassword is too similar to the old password")
+       # print("newPassword is too similar to the old password")
         return False
     flag = checkSimilarity(newPassword, oldPassword)
     if not flag:
-        print("newPassword is too similar to the old password")
+       # print("newPassword is too similar to the old password")
         return False
     return True
 
